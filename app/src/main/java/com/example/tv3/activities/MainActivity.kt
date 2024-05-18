@@ -1,4 +1,4 @@
-package com.example.tv3
+package com.example.tv3.activities
 
 import android.os.Bundle
 import android.view.KeyEvent
@@ -10,8 +10,17 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.leanback.widget.BrowseFrameLayout
+import com.example.tv3.R
+import com.example.tv3.fragment.GenresFragment
+import com.example.tv3.fragment.HomeFragment
 import com.example.tv3.utils.Common
 import com.example.tv3.utils.Constants
+import com.example.tv3.fragment.SearchFragment
+import com.example.tv3.fragment.TvShowFragment
+import com.example.tv3.fragment.MovieFragment
+import com.example.tv3.fragment.SportsFragment
+import com.example.tv3.fragment.SettingsFragment
+import com.example.tv3.fragment.LanguageFragment
 
 class MainActivity : FragmentActivity(), View.OnKeyListener {
 
@@ -94,7 +103,7 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
 
     override fun onKey(view: View?, i: Int, key_event: KeyEvent?): Boolean {
         when (i) {
-            KeyEvent.KEYCODE_DPAD_CENTER -> {
+            KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
 
                 lastSelectedMenu.isActivated = false
                 view?.isActivated = true
@@ -103,7 +112,7 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
                 when (view.id) {
                     R.id.btn_search -> {
                         selectedMenu = Constants.MENU_SEARCH
-//                        changeFragment(SearchFragment())
+                        changeFragment(SearchFragment())
                     }
                     R.id.btn_home -> {
                         selectedMenu = Constants.MENU_HOME
@@ -111,27 +120,27 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
                     }
                     R.id.btn_tv -> {
                         selectedMenu = Constants.MENU_TV
-//                        changeFragment(TvShowFragment())
+                        changeFragment(TvShowFragment())
                     }
                     R.id.btn_movies -> {
                         selectedMenu = Constants.MENU_MOVIE
-//                        changeFragment(MovieFragment())
+                        changeFragment(MovieFragment())
                     }
                     R.id.btn_sports -> {
                         selectedMenu = Constants.MENU_SPORTS
-//                        changeFragment(SportsFragment())
+                        changeFragment(SportsFragment())
                     }
                     R.id.btn_settings -> {
                         selectedMenu = Constants.MENU_SETTINGS
-//                        changeFragment(SettingsFragment())
+                        changeFragment(SettingsFragment())
                     }
                     R.id.btn_language -> {
                         selectedMenu = Constants.MENU_LANGUAGE
-//                        changeFragment(LanguageFragment())
+                        changeFragment(LanguageFragment())
                     }
                     R.id.btn_genre -> {
                         selectedMenu = Constants.MENU_GENRES
-//                        changeFragment(GenresFragment())
+                        changeFragment(GenresFragment())
                     }
                 }
 
@@ -140,7 +149,6 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
             KeyEvent.KEYCODE_DPAD_LEFT -> {
                 if (!SIDE_MENU) {
                     switchToLastSelectedMenu()
-
                     openMenu()
                     SIDE_MENU = true
                 }
@@ -167,7 +175,7 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         }
     }
 
-    fun switchToLastSelectedMenu() {
+    private fun switchToLastSelectedMenu() {
         when (selectedMenu) {
             Constants.MENU_SEARCH -> {
                 btnSearch.requestFocus()

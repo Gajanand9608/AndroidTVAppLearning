@@ -1,12 +1,14 @@
-package com.example.tv3
+package com.example.tv3.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.example.tv3.databinding.ActivityMainBinding
+import com.example.tv3.R
+import com.example.tv3.activities.DetailActivity
 import com.example.tv3.databinding.FragmentHomeBinding
 import com.example.tv3.model.Detail
 import com.example.tv3.model.MoviesDataModel
@@ -48,7 +50,14 @@ class HomeFragment : Fragment() {
         listFragment.setOnContentSelectedListener {
             updateBanner(it)
         }
+
+        listFragment.setOnContentClickedListener {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("id",it.id)
+            startActivity(intent)
+        }
     }
+
 
 
     private fun updateBanner(movie: Detail) {
