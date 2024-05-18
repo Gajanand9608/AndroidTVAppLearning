@@ -29,8 +29,10 @@ class ItemPresenter : Presenter() {
 
         val imageview = viewHolder?.view?.findViewById<ImageView>(R.id.poster_image)
 
+        val url = "https://www.themoviedb.org/t/p/w500" + content?.poster_path
+
         Glide.with(viewHolder?.view?.context!!)
-            .load(content?.poster_path)
+            .load(url)
             .into(imageview!!)
 
     }

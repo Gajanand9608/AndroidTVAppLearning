@@ -63,6 +63,7 @@ class HomeFragment : Fragment() {
     private fun updateBanner(movie: Detail) {
         binding.title.text = movie.title
         binding.description.text = movie.overview
-        Glide.with(this).load(movie.poster_path).into(binding.imgBanner)
+        val url = "https://www.themoviedb.org/t/p/w780" + movie.backdrop_path
+        Glide.with(this).load(url).into(binding.imgBanner)
     }
 }
