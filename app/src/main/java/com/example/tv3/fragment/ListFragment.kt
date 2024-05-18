@@ -13,8 +13,10 @@ import androidx.leanback.widget.OnItemViewSelectedListener
 import androidx.leanback.widget.Presenter
 import androidx.leanback.widget.Row
 import androidx.leanback.widget.RowPresenter
+import com.example.tv3.model.Cast
 import com.example.tv3.model.Detail
 import com.example.tv3.model.MoviesDataModel
+import com.example.tv3.presenter.CastItemPresenter
 import com.example.tv3.presenter.ItemPresenter
 
 class ListFragment : RowsSupportFragment() {
@@ -22,7 +24,17 @@ class ListFragment : RowsSupportFragment() {
     private var itemSelectedListener: ((Detail) -> Unit)? = null
     private var itemClickListener : ((Detail) -> Unit)? = null
 
-    private val rootAdapter : ArrayObjectAdapter = ArrayObjectAdapter(ListRowPresenter(FocusHighlight.ZOOM_FACTOR_MEDIUM))
+
+    private val listRowPresenter = object : ListRowPresenter(FocusHighlight.ZOOM_FACTOR_MEDIUM){
+        override fun isUsingDefaultListSelectEffect(): Boolean {
+            return false
+        }
+    }.apply {
+        shadowEnabled = false
+    }
+
+    private val rootAdapter : ArrayObjectAdapter = ArrayObjectAdapter(listRowPresenter)
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,6 +54,16 @@ class ListFragment : RowsSupportFragment() {
             val listRow = ListRow(headerItem, arrayObjectAdapter)
             rootAdapter.add(listRow)
         }
+    }
+
+    fun bindCastData(cast: List<Cast>) {
+        val arrayObjectAdapter = ArrayObjectAdapter(CastItemPresenter())
+        cast.forEach {
+            arrayObjectAdapter.add(it)
+        }
+        val headerItem = HeaderItem("Cast & Crew")
+        val listRow = ListRow(headerItem, arrayObjectAdapter)
+        rootAdapter.add(listRow)
     }
 
     fun setOnContentSelectedListener(listener : (Detail) -> Unit){
@@ -76,5 +98,11 @@ class ListFragment : RowsSupportFragment() {
                itemClickListener?.invoke(item)
            }
         }
+    }
+
+    fun requestFocus(): View {
+        val view = view
+        view?.requestFocus()
+        return view!!
     }
 }

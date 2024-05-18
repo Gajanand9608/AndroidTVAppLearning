@@ -1,27 +1,36 @@
 package com.example.tv3.activities
 
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.tv3.MyApplication
+import com.example.tv3.R
 import com.example.tv3.api.ResponseState
 import com.example.tv3.databinding.ActivityDetailBinding
+import com.example.tv3.fragment.ListFragment
 import com.example.tv3.model.DetailResponseModel
+import com.example.tv3.utils.Common
+import com.example.tv3.utils.Common.Companion.isEllipsized
 import com.example.tv3.viewModel.DetailViewModel
 import com.example.tv3.viewModel.DetailViewModelFactory
-import com.google.android.material.progressindicator.CircularProgressIndicator
 
 class DetailActivity : FragmentActivity() {
 
     private lateinit var binding : ActivityDetailBinding
     private lateinit var viewModel: DetailViewModel
+    private val castFragment  = ListFragment()
+
     private var movieId : Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        addCastFragment()
 
         if(intent != null && intent.hasExtra("id")){
             movieId = intent.getIntExtra("id",0)
@@ -30,9 +39,21 @@ class DetailActivity : FragmentActivity() {
         val repository = (application as MyApplication).tmdbRepo
         viewModel = ViewModelProvider(this, DetailViewModelFactory(repository,movieId)).get(DetailViewModel::class.java)
 
-
+        initListeners()
         initObservers()
+    }
 
+    private fun initListeners() {
+        binding.addToMylist.setOnKeyListener { view, keyCode, keyEvent ->
+            when(keyCode){
+                KeyEvent.KEYCODE_DPAD_DOWN -> {
+                    if(keyEvent.action == KeyEvent.ACTION_DOWN){
+                        castFragment.requestFocus()
+                    }
+                }
+            }
+            false
+        }
     }
 
     private fun initObservers(){
@@ -51,17 +72,46 @@ class DetailActivity : FragmentActivity() {
                 }
             }
         }
+
+        viewModel.castDetailLiveData.observe(this){
+            when(it){
+                is ResponseState.Error -> {
+
+                }
+                is ResponseState.Loading -> {
+
+                }
+                is ResponseState.Success -> {
+                    if(it.data?.cast.isNullOrEmpty().not()){
+                        castFragment.bindCastData(it.data?.cast!!)
+                    }
+                }
+            }
+        }
     }
 
-    private fun setData(it: DetailResponseModel) {
-        binding.title.text = it.title
-        binding.subtitle.text = getSubtitle(it)
-        binding.description.text = it.overview
+    private fun setData(model: DetailResponseModel) {
+        binding.title.text = model.title
+        binding.subtitle.text = getSubtitle(model)
+        binding.description.text = model.overview
 
-        val path = "https://www.themoviedb.org/t/p/w780" + (it.backdrop_path ?: "")
+        val path = "https://www.themoviedb.org/t/p/w780" + (model.backdrop_path ?: "")
         Glide.with(this)
             .load(path)
             .into(binding.imgBanner)
+
+        binding.description.isEllipsized { isEllipsized ->
+            binding.showMore.visibility = if (isEllipsized) View.VISIBLE else View.GONE
+
+            binding.showMore.setOnClickListener {
+                Common.descriptionDialog(
+                    this,
+                    model.title,
+                    getSubtitle(model),
+                    model.overview.toString()
+                )
+            }
+        }
 
     }
 
@@ -76,5 +126,11 @@ class DetailActivity : FragmentActivity() {
         val hours : Int = detailResponseModel.runtime / 60
         val min : Int = detailResponseModel.runtime % 60
         return rating + genres + hours + "h " + min + " m"
+    }
+
+    private fun addCastFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.cast_fragment, castFragment)
+        transaction.commit()
     }
 }
