@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -35,6 +36,8 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true
+
     }
 }
 
@@ -50,10 +53,15 @@ dependencies {
     implementation(libs.glide)
 
     // define a BOM and its version
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
+    implementation(platform(libs.okhttp.bom))
 
     // define any required OkHttp artifacts without version
-    implementation("com.squareup.okhttp3:okhttp")
-    implementation("com.squareup.okhttp3:logging-interceptor")
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
 
 }
