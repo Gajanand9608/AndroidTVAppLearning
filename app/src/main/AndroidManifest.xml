@@ -35,7 +35,7 @@
         </activity>
 
         <activity
-            android:name=".activities.PlaybackActivity"
+            android:name=".player.PlaybackActivity"
             android:exported="true">
         </activity>
     </application>

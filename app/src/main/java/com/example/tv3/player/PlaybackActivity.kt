@@ -1,9 +1,8 @@
-package com.example.tv3.activities
+package com.example.tv3.player
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.example.tv3.R
-import com.example.tv3.fragment.MyVideoFragment
 
 class PlaybackActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

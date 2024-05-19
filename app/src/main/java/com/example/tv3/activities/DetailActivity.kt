@@ -14,6 +14,7 @@ import com.example.tv3.api.ResponseState
 import com.example.tv3.databinding.ActivityDetailBinding
 import com.example.tv3.fragment.ListFragment
 import com.example.tv3.model.DetailResponseModel
+import com.example.tv3.player.PlaybackActivity
 import com.example.tv3.utils.Common
 import com.example.tv3.utils.Common.Companion.isEllipsized
 import com.example.tv3.viewModel.DetailViewModel
