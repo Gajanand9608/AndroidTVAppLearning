@@ -1,5 +1,6 @@
 package com.example.tv3.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -53,6 +54,11 @@ class DetailActivity : FragmentActivity() {
                 }
             }
             false
+        }
+
+        binding.play.setOnClickListener {
+            val intent = Intent(this, PlaybackActivity::class.java)
+            startActivity(intent)
         }
     }
 
