@@ -1,47 +1,99 @@
 package com.example.tv3.player
 
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.core.view.isVisible
 import androidx.leanback.app.VideoSupportFragment
 import androidx.leanback.app.VideoSupportFragmentGlueHost
 import androidx.leanback.media.MediaPlayerAdapter
 import androidx.leanback.media.PlaybackGlue
 import androidx.leanback.media.PlaybackTransportControlGlue
 import androidx.leanback.widget.PlaybackSeekDataProvider
+import com.example.tv3.R
+import com.example.tv3.model.DetailResponseModel
 
 class MyVideoFragment : VideoSupportFragment() {
 
-    private lateinit var transportGlue : CustomTransportControlGlue
+    private lateinit var transportGlue: CustomTransportControlGlue
+    private lateinit var fastForwardIndicatorView: View
+    private lateinit var rewindIndicatorView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        val playerGlue = PlaybackTransportControlGlue(activity,MediaPlayerAdapter(activity))
-//        playerGlue.host = VideoSupportFragmentGlueHost(this)
-//        playerGlue.addPlayerCallback(object : PlaybackGlue.PlayerCallback(){
-//            override fun onPreparedStateChanged(glue: PlaybackGlue?) {
-//                if(glue?.isPrepared == true){
-//                    playerGlue.seekProvider = PlaybackSeekDataProvider()
-//                    playerGlue.play()
-//                }
-//            }
-//        })
-//
-//        playerGlue.title = "Android TV"
-//        playerGlue.subtitle = "Demo subtitle"
-//
-//        val uriPath = "https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/Y2meta.app%20-%20copyright%20free%20nature%20videos%20_%20No%20copyright%20video%20nature%20_%20Download%20copyright%20free%20nature%20video.mp4?alt=media&token=44585b74-89fe-4341-b5a5-018030d095df"
-//        playerGlue.playerAdapter.setDataSource(Uri.parse(uriPath))
-
-        context?.let {
-            transportGlue = CustomTransportControlGlue(it, BasicMediaPlayerAdapter(it))
-            transportGlue.host = VideoSupportFragmentGlueHost(this)
-            transportGlue.title = "Android TV"
-            transportGlue.subtitle = "Demo subtitle"
-
-            val uriPath = "https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/Y2meta.app%20-%20copyright%20free%20nature%20videos%20_%20No%20copyright%20video%20nature%20_%20Download%20copyright%20free%20nature%20video.mp4?alt=media&token=44585b74-89fe-4341-b5a5-018030d095df"
-            transportGlue.playerAdapter.setDataSource(Uri.parse(uriPath))
+        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable("movie_detail", DetailResponseModel::class.java)
+        } else {
+            arguments?.getParcelable<DetailResponseModel>("movie_detail")
         }
 
+        transportGlue =
+            CustomTransportControlGlue(requireContext(), BasicMediaPlayerAdapter(requireContext()))
+        transportGlue.host = VideoSupportFragmentGlueHost(this)
+        transportGlue.loadMovieInfo(data)
+
+
+//        setOnKeyInterceptListener { v, keyCode, event ->
+//            if (isControlsOverlayVisible || event.repeatCount > 0) {
+////                showControlsOverlay(true)
+//            } else {
+//                when (keyCode) {
+//                    KeyEvent.KEYCODE_DPAD_RIGHT -> {
+////                        showControlsOverlay()
+//                        if (event.action == KeyEvent.ACTION_DOWN) {
+//                            animateIndicator(fastForwardIndicatorView)
+//                        }
+//                    }
+//
+//                    KeyEvent.KEYCODE_DPAD_LEFT -> {
+////                        showControlsOverlay()
+//                        if (event.action == KeyEvent.ACTION_DOWN) {
+//                            animateIndicator(rewindIndicatorView)
+//                        }
+//                    }
+//                }
+//            }
+//
+//            transportGlue.onKey(v, keyCode, event)
+//        }
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view =  super.onCreateView(inflater, container, savedInstanceState) as ViewGroup
+        fastForwardIndicatorView = inflater.inflate(R.layout.view_forward,view,false)
+        view.addView(fastForwardIndicatorView)
+
+        rewindIndicatorView = inflater.inflate(R.layout.view_rewind,view,false)
+        view.addView(rewindIndicatorView)
+
+        return view
+    }
+    fun animateIndicator(indicator: View) {
+        indicator.animate().withEndAction {
+            indicator.isVisible = true
+            indicator.alpha = 1f
+            indicator.scaleX = 1f
+            indicator.scaleY = 1f
+        }
+            .withStartAction {
+                indicator.isVisible = true
+
+            }.alpha(0.2f)
+            .scaleX(2f)
+            .scaleY(2f)
+            .setDuration(400)
+            .setInterpolator(AccelerateDecelerateInterpolator())
+            .start()
     }
 }

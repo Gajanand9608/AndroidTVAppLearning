@@ -1,9 +1,14 @@
 package com.example.tv3.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+
+@Parcelize
 data class DetailResponseModel(
     val adult: Boolean,
     val backdrop_path: String,
-    val belongs_to_collection: BelongsToCollection,
+    val belongs_to_collection: BelongsToCollection?,
     val budget: Int,
     val genres: List<Genre>,
     val homepage: String,
@@ -15,8 +20,8 @@ data class DetailResponseModel(
     val overview: String,
     val popularity: Double,
     val poster_path: String,
-    val production_companies: List<ProductionCompany>,
-    val production_countries: List<ProductionCountry>,
+    val production_companies: List<ProductionCompany>?,
+    val production_countries: List<ProductionCountry>?,
     val release_date: String,
     val revenue: Long,
     val runtime: Int,
@@ -27,4 +32,4 @@ data class DetailResponseModel(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-)
+) : Parcelable

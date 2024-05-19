@@ -14,6 +14,7 @@ import com.example.tv3.api.ResponseState
 import com.example.tv3.databinding.ActivityDetailBinding
 import com.example.tv3.fragment.ListFragment
 import com.example.tv3.model.DetailResponseModel
+import com.example.tv3.model.MovieCastDetailModel
 import com.example.tv3.player.PlaybackActivity
 import com.example.tv3.utils.Common
 import com.example.tv3.utils.Common.Companion.isEllipsized
@@ -27,6 +28,7 @@ class DetailActivity : FragmentActivity() {
     private val castFragment  = ListFragment()
 
     private var movieId : Int = 0
+    var detailResponse : DetailResponseModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -59,6 +61,7 @@ class DetailActivity : FragmentActivity() {
 
         binding.play.setOnClickListener {
             val intent = Intent(this, PlaybackActivity::class.java)
+            intent.putExtra("movie_detail",detailResponse)
             startActivity(intent)
         }
     }
@@ -74,6 +77,7 @@ class DetailActivity : FragmentActivity() {
                 }
                 is ResponseState.Success -> {
                     it.data?.let {
+                        detailResponse = it
                         setData(it)
                     }
                 }

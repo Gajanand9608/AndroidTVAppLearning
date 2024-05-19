@@ -23,6 +23,8 @@ class DetailViewModel(
 
     private val _castDetailLiveData : MutableLiveData<ResponseState<MovieCastDetailModel>> = MutableLiveData(null)
     val castDetailLiveData : LiveData<ResponseState<MovieCastDetailModel>> = _castDetailLiveData
+
+
     init {
         getMovieDetailById(id = id)
         getCastDetails(id = id)
@@ -68,4 +70,6 @@ class DetailViewModel(
             }
         }
     }
+
+
 }
