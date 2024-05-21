@@ -26,23 +26,5 @@ class Common {
                 ellipsize.invoke(ellipseCount > 0)
             }
         }
-
-        fun descriptionDialog(context: Context, title: String?, subtext: String, description: String) {
-            val dialog = Dialog(context, R.style.Theme_TvApp)
-            dialog.window?.setBackgroundDrawableResource(R.color.transparent)
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setContentView(R.layout.dialog_description)
-
-            dialog.findViewById<TextView>(R.id.tvTitle).text = title
-            dialog.findViewById<TextView>(R.id.tvSubTitle).text = subtext
-            dialog.findViewById<TextView>(R.id.description).text = description
-
-            dialog.findViewById<TextView>(R.id.closeBtn).setOnClickListener {
-                dialog.dismiss()
-            }
-
-            dialog.show()
-        }
     }
-
 }

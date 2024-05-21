@@ -16,7 +16,6 @@ import androidx.leanback.widget.RowPresenter
 import com.example.tv3.model.Cast
 import com.example.tv3.model.Detail
 import com.example.tv3.model.MoviesDataModel
-import com.example.tv3.presenter.CastItemPresenter
 import com.example.tv3.presenter.ItemPresenter
 
 class ListFragment : RowsSupportFragment() {
@@ -54,16 +53,6 @@ class ListFragment : RowsSupportFragment() {
             val listRow = ListRow(headerItem, arrayObjectAdapter)
             rootAdapter.add(listRow)
         }
-    }
-
-    fun bindCastData(cast: List<Cast>) {
-        val arrayObjectAdapter = ArrayObjectAdapter(CastItemPresenter())
-        cast.forEach {
-            arrayObjectAdapter.add(it)
-        }
-        val headerItem = HeaderItem("Cast & Crew")
-        val listRow = ListRow(headerItem, arrayObjectAdapter)
-        rootAdapter.add(listRow)
     }
 
     fun setOnContentSelectedListener(listener : (Detail) -> Unit){

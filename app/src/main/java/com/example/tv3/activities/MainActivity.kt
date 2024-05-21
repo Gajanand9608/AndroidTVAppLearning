@@ -11,16 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.leanback.widget.BrowseFrameLayout
 import com.example.tv3.R
-import com.example.tv3.fragment.GenresFragment
 import com.example.tv3.fragment.HomeFragment
 import com.example.tv3.utils.Common
 import com.example.tv3.utils.Constants
 import com.example.tv3.fragment.SearchFragment
-import com.example.tv3.fragment.TvShowFragment
-import com.example.tv3.fragment.MovieFragment
-import com.example.tv3.fragment.SportsFragment
-import com.example.tv3.fragment.SettingsFragment
-import com.example.tv3.fragment.LanguageFragment
 
 class MainActivity : FragmentActivity(), View.OnKeyListener {
 

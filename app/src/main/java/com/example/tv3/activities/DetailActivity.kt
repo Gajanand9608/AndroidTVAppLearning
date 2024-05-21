@@ -93,9 +93,7 @@ class DetailActivity : FragmentActivity() {
 
                 }
                 is ResponseState.Success -> {
-                    if(it.data?.cast.isNullOrEmpty().not()){
-                        castFragment.bindCastData(it.data?.cast!!)
-                    }
+
                 }
             }
         }
@@ -110,19 +108,6 @@ class DetailActivity : FragmentActivity() {
         Glide.with(this)
             .load(path)
             .into(binding.imgBanner)
-
-        binding.description.isEllipsized { isEllipsized ->
-            binding.showMore.visibility = if (isEllipsized) View.VISIBLE else View.GONE
-
-            binding.showMore.setOnClickListener {
-                Common.descriptionDialog(
-                    this,
-                    model.title,
-                    getSubtitle(model),
-                    model.overview.toString()
-                )
-            }
-        }
 
     }
 
