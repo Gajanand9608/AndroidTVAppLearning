@@ -83,20 +83,6 @@ class DetailActivity : FragmentActivity() {
                 }
             }
         }
-
-        viewModel.castDetailLiveData.observe(this){
-            when(it){
-                is ResponseState.Error -> {
-
-                }
-                is ResponseState.Loading -> {
-
-                }
-                is ResponseState.Success -> {
-
-                }
-            }
-        }
     }
 
     private fun setData(model: DetailResponseModel) {
@@ -108,7 +94,6 @@ class DetailActivity : FragmentActivity() {
         Glide.with(this)
             .load(path)
             .into(binding.imgBanner)
-
     }
 
     private fun getSubtitle(detailResponseModel: DetailResponseModel): String {

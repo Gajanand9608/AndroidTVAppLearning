@@ -11,10 +11,4 @@ class TmdbRepo(private val service: ApiService) {
         return result
     }
 
-    suspend fun getCastDetails(id: Int): Response<MovieCastDetailModel> {
-        val result = service.getCastDetail(id, API_KEY)
-        return result
-    }
-
-
 }
