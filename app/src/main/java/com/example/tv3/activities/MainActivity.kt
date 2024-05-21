@@ -29,12 +29,7 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
 
     lateinit var btnSearch: TextView
     lateinit var btnHome: TextView
-    lateinit var btnTvshow: TextView
-    lateinit var btnMovie: TextView
-    lateinit var btnSports: TextView
-    lateinit var btnSetting: TextView
-    lateinit var btnLanguage: TextView
-    lateinit var btnGenre: TextView
+
 
     var SIDE_MENU = false
     var selectedMenu = Constants.MENU_HOME
@@ -49,29 +44,9 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
 
         btnSearch = findViewById(R.id.btn_search)
         btnHome = findViewById(R.id.btn_home)
-        btnTvshow = findViewById(R.id.btn_tv)
-        btnMovie = findViewById(R.id.btn_movies)
-        btnSports = findViewById(R.id.btn_sports)
-        btnSetting = findViewById(R.id.btn_settings)
-        btnLanguage = findViewById(R.id.btn_language)
-        btnGenre = findViewById(R.id.btn_genre)
 
         btnSearch.setOnKeyListener(this)
         btnHome.setOnKeyListener(this)
-        btnTvshow.setOnKeyListener(this)
-        btnMovie.setOnKeyListener(this)
-        btnSports.setOnKeyListener(this)
-        btnSetting.setOnKeyListener(this)
-        btnLanguage.setOnKeyListener(this)
-        btnGenre.setOnKeyListener(this)
-
-        btnHome.setOnKeyListener(this)
-        btnTvshow.setOnKeyListener(this)
-        btnMovie.setOnKeyListener(this)
-        btnSports.setOnKeyListener(this)
-        btnSetting.setOnKeyListener(this)
-        btnLanguage.setOnKeyListener(this)
-        btnGenre.setOnKeyListener(this)
 
         lastSelectedMenu = btnHome
         lastSelectedMenu.isActivated = true
@@ -118,30 +93,6 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
                         selectedMenu = Constants.MENU_HOME
                         changeFragment(HomeFragment())
                     }
-                    R.id.btn_tv -> {
-                        selectedMenu = Constants.MENU_TV
-                        changeFragment(TvShowFragment())
-                    }
-                    R.id.btn_movies -> {
-                        selectedMenu = Constants.MENU_MOVIE
-                        changeFragment(MovieFragment())
-                    }
-                    R.id.btn_sports -> {
-                        selectedMenu = Constants.MENU_SPORTS
-                        changeFragment(SportsFragment())
-                    }
-                    R.id.btn_settings -> {
-                        selectedMenu = Constants.MENU_SETTINGS
-                        changeFragment(SettingsFragment())
-                    }
-                    R.id.btn_language -> {
-                        selectedMenu = Constants.MENU_LANGUAGE
-                        changeFragment(LanguageFragment())
-                    }
-                    R.id.btn_genre -> {
-                        selectedMenu = Constants.MENU_GENRES
-                        changeFragment(GenresFragment())
-                    }
                 }
 
             }
@@ -182,24 +133,6 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
             }
             Constants.MENU_HOME -> {
                 btnHome.requestFocus()
-            }
-            Constants.MENU_TV -> {
-                btnTvshow.requestFocus()
-            }
-            Constants.MENU_MOVIE -> {
-                btnMovie.requestFocus()
-            }
-            Constants.MENU_SPORTS -> {
-                btnSports.requestFocus()
-            }
-            Constants.MENU_LANGUAGE -> {
-                btnLanguage.requestFocus()
-            }
-            Constants.MENU_GENRES -> {
-                btnGenre.requestFocus()
-            }
-            Constants.MENU_SETTINGS -> {
-                btnSetting.requestFocus()
             }
         }
     }
