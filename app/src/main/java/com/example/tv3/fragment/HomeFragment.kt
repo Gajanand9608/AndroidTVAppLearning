@@ -13,6 +13,7 @@ import com.example.tv3.activities.DetailActivity
 import com.example.tv3.databinding.FragmentHomeBinding
 import com.example.tv3.model2.TvDataModel
 import com.example.tv3.model2.VideoModel
+import com.example.tv3.player.PlaybackActivity
 import com.example.tv3.viewModel.MainViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,7 +58,7 @@ class HomeFragment : Fragment() {
         }
 
         listFragment.setOnContentClickedListener {
-            val intent = Intent(context, DetailActivity::class.java)
+            val intent = Intent(context, PlaybackActivity::class.java)
             intent.putExtra("videoUri",it.videoUri)
             startActivity(intent)
         }
