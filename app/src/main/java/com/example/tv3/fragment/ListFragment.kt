@@ -14,6 +14,7 @@ import androidx.leanback.widget.Presenter
 import androidx.leanback.widget.Row
 import androidx.leanback.widget.RowPresenter
 import com.example.tv3.model.Detail
+import com.example.tv3.model2.ImageModel
 import com.example.tv3.model2.TvDataModel
 import com.example.tv3.model2.VideoModel
 import com.example.tv3.model2.Videos
@@ -21,8 +22,11 @@ import com.example.tv3.presenter.ItemPresenter
 
 class ListFragment : RowsSupportFragment() {
 
-    private var itemSelectedListener: ((VideoModel) -> Unit)? = null
-    private var itemClickListener : ((VideoModel) -> Unit)? = null
+    private var itemVideoSelectedListener: ((VideoModel) -> Unit)? = null
+    private var itemVideoClickedListener : ((VideoModel) -> Unit)? = null
+
+    private var itemImageSelectedListener: ((ImageModel) -> Unit)? = null
+    private var itemImageClickedListener : ((ImageModel) -> Unit)? = null
 
 
     private val listRowPresenter = object : ListRowPresenter(FocusHighlight.ZOOM_FACTOR_MEDIUM){
@@ -58,17 +62,26 @@ class ListFragment : RowsSupportFragment() {
             arrayObjectAdapter2.add(result)
         }
         val headerItem2 = HeaderItem(data.images.title)
-        val listRow2 = ListRow(headerItem2, arrayObjectAdapter)
+        val listRow2 = ListRow(headerItem2, arrayObjectAdapter2)
         rootAdapter.add(listRow2)
     }
 
-    fun setOnContentSelectedListener(listener : (VideoModel) -> Unit){
-        this.itemSelectedListener = listener
+    fun setOnVideoContentSelectedListener(listener : (VideoModel) -> Unit){
+        this.itemVideoSelectedListener = listener
     }
 
-    fun setOnContentClickedListener(listener : (VideoModel) -> Unit){
-        this.itemClickListener = listener
+    fun setOnVideoContentClickedListener(listener : (VideoModel) -> Unit){
+        this.itemVideoClickedListener = listener
     }
+
+    fun setOnImageContentSelectedListener(listener : (ImageModel) -> Unit){
+        this.itemImageSelectedListener = listener
+    }
+
+    fun setOnImageContentClickedListener(listener : (ImageModel) -> Unit){
+        this.itemImageClickedListener = listener
+    }
+
 
     inner class ItemViewSelectedListener : OnItemViewSelectedListener {
         override fun onItemSelected(
@@ -78,7 +91,9 @@ class ListFragment : RowsSupportFragment() {
             row: Row?
         ) {
             if(item is VideoModel){
-                itemSelectedListener?.invoke(item)
+                itemVideoSelectedListener?.invoke(item)
+            }else if(item is ImageModel){
+                itemImageSelectedListener?.invoke(item)
             }
         }
     }
@@ -91,7 +106,9 @@ class ListFragment : RowsSupportFragment() {
             row: Row?
         ) {
            if(item is VideoModel){
-               itemClickListener?.invoke(item)
+               itemVideoClickedListener?.invoke(item)
+           }else if(item is ImageModel){
+               itemImageClickedListener?.invoke(item)
            }
         }
     }

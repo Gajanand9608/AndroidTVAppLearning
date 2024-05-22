@@ -12,6 +12,7 @@ import com.example.tv3.R
 import com.example.tv3.model.Detail
 import com.example.tv3.model.MoviesDataModel
 import com.example.tv3.model.Result
+import com.example.tv3.model2.ImageModel
 import com.example.tv3.model2.VideoModel
 
 class ItemPresenter : Presenter() {
@@ -26,12 +27,15 @@ class ItemPresenter : Presenter() {
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder?, item: Any?) {
-        val content = item as? VideoModel
-
         val imageview = viewHolder?.view?.findViewById<ImageView>(R.id.poster_image)
-
-        val url = content?.backgroundImage
-
+        var url = ""
+        if(item is VideoModel){
+            val content = item as? VideoModel
+            url = content?.backgroundImage.toString()
+        }else{
+            val content = item as? ImageModel
+            url = content?.imageUri.toString()
+        }
         Glide.with(viewHolder?.view?.context!!)
             .load(url)
             .into(imageview!!)

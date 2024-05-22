@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.tv3.R
 import com.example.tv3.activities.DetailActivity
 import com.example.tv3.databinding.FragmentHomeBinding
+import com.example.tv3.model2.ImageModel
 import com.example.tv3.model2.TvDataModel
 import com.example.tv3.model2.VideoModel
 import com.example.tv3.player.PlaybackActivity
@@ -53,11 +54,15 @@ class HomeFragment : Fragment() {
 
         listFragment.bindData(dataList)
 
-        listFragment.setOnContentSelectedListener {
+        listFragment.setOnVideoContentSelectedListener {
             updateBanner(it)
         }
 
-        listFragment.setOnContentClickedListener {
+        listFragment.setOnImageContentSelectedListener {
+            updateBanner2(it)
+        }
+
+        listFragment.setOnVideoContentClickedListener{
             val intent = Intent(context, PlaybackActivity::class.java)
             intent.putExtra("videoUri",it.videoUri)
             startActivity(intent)
@@ -69,6 +74,12 @@ class HomeFragment : Fragment() {
     private fun updateBanner(movie: VideoModel) {
         binding.title.text = movie.title
         val url = movie.backgroundImage
+        Glide.with(this).load(url).into(binding.imgBanner)
+    }
+
+    private fun updateBanner2(image: ImageModel) {
+        binding.title.text = image.title
+        val url = image.imageUri
         Glide.with(this).load(url).into(binding.imgBanner)
     }
 }
