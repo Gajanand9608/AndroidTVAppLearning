@@ -13,15 +13,16 @@ import androidx.leanback.widget.OnItemViewSelectedListener
 import androidx.leanback.widget.Presenter
 import androidx.leanback.widget.Row
 import androidx.leanback.widget.RowPresenter
-import com.example.tv3.model.Cast
 import com.example.tv3.model.Detail
-import com.example.tv3.model.MoviesDataModel
+import com.example.tv3.model2.TvDataModel
+import com.example.tv3.model2.VideoModel
+import com.example.tv3.model2.Videos
 import com.example.tv3.presenter.ItemPresenter
 
 class ListFragment : RowsSupportFragment() {
 
-    private var itemSelectedListener: ((Detail) -> Unit)? = null
-    private var itemClickListener : ((Detail) -> Unit)? = null
+    private var itemSelectedListener: ((VideoModel) -> Unit)? = null
+    private var itemClickListener : ((VideoModel) -> Unit)? = null
 
 
     private val listRowPresenter = object : ListRowPresenter(FocusHighlight.ZOOM_FACTOR_MEDIUM){
@@ -42,24 +43,30 @@ class ListFragment : RowsSupportFragment() {
         onItemViewClickedListener = ItemViewClickedListener()
     }
 
-    fun bindData(dataList: MoviesDataModel) {
-        dataList.result.forEachIndexed { index, result ->
-            val arrayObjectAdapter = ArrayObjectAdapter(ItemPresenter())
-            result.details.forEach {
-                arrayObjectAdapter.add(it)
-            }
-
-            val headerItem = HeaderItem(result.title)
-            val listRow = ListRow(headerItem, arrayObjectAdapter)
-            rootAdapter.add(listRow)
+    fun bindData(data: TvDataModel) {
+        val arrayObjectAdapter = ArrayObjectAdapter(ItemPresenter())
+        data.videos.data.forEachIndexed { index, result ->
+            arrayObjectAdapter.add(result)
         }
+        val headerItem = HeaderItem(data.videos.title)
+        val listRow = ListRow(headerItem, arrayObjectAdapter)
+        rootAdapter.add(listRow)
+
+        val arrayObjectAdapter2 = ArrayObjectAdapter(ItemPresenter())
+
+        data.images.data.forEachIndexed { index, result ->
+            arrayObjectAdapter2.add(result)
+        }
+        val headerItem2 = HeaderItem(data.images.title)
+        val listRow2 = ListRow(headerItem2, arrayObjectAdapter)
+        rootAdapter.add(listRow2)
     }
 
-    fun setOnContentSelectedListener(listener : (Detail) -> Unit){
+    fun setOnContentSelectedListener(listener : (VideoModel) -> Unit){
         this.itemSelectedListener = listener
     }
 
-    fun setOnContentClickedListener(listener : (Detail) -> Unit){
+    fun setOnContentClickedListener(listener : (VideoModel) -> Unit){
         this.itemClickListener = listener
     }
 
@@ -70,7 +77,7 @@ class ListFragment : RowsSupportFragment() {
             rowViewHolder: RowPresenter.ViewHolder?,
             row: Row?
         ) {
-            if(item is Detail){
+            if(item is VideoModel){
                 itemSelectedListener?.invoke(item)
             }
         }
@@ -83,15 +90,9 @@ class ListFragment : RowsSupportFragment() {
             rowViewHolder: RowPresenter.ViewHolder?,
             row: Row?
         ) {
-           if(item is Detail){
+           if(item is VideoModel){
                itemClickListener?.invoke(item)
            }
         }
-    }
-
-    fun requestFocus(): View {
-        val view = view
-        view?.requestFocus()
-        return view!!
     }
 }

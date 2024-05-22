@@ -12,29 +12,29 @@ import com.example.tv3.R
 import com.example.tv3.model.Detail
 import com.example.tv3.model.MoviesDataModel
 import com.example.tv3.model.Result
+import com.example.tv3.model2.VideoModel
 
 class ItemPresenter : Presenter() {
     override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_view, parent, false)
         val params = view.layoutParams
         parent?.let {
-            params.height = getHeightInPercent(it.context, 32)
-            params.width = getWidthInPercent(it.context, 12)
+            params.height = getHeightInPercent(it.context, 30)
+            params.width = getWidthInPercent(it.context, 20)
         }
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder?, item: Any?) {
-        val content = item as? Detail
+        val content = item as? VideoModel
 
         val imageview = viewHolder?.view?.findViewById<ImageView>(R.id.poster_image)
 
-        val url = "https://www.themoviedb.org/t/p/w500" + content?.poster_path
+        val url = content?.backgroundImage
 
         Glide.with(viewHolder?.view?.context!!)
             .load(url)
             .into(imageview!!)
-
     }
 
     override fun onUnbindViewHolder(viewHolder: ViewHolder?) {

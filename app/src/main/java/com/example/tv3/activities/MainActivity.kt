@@ -15,7 +15,9 @@ import com.example.tv3.fragment.HomeFragment
 import com.example.tv3.utils.Common
 import com.example.tv3.utils.Constants
 import com.example.tv3.fragment.SearchFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : FragmentActivity(), View.OnKeyListener {
 
     lateinit var navBar: BrowseFrameLayout

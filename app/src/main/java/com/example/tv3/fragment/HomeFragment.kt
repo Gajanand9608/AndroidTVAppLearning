@@ -6,20 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.tv3.R
 import com.example.tv3.activities.DetailActivity
 import com.example.tv3.databinding.FragmentHomeBinding
-import com.example.tv3.model.Detail
-import com.example.tv3.model.MoviesDataModel
+import com.example.tv3.model2.TvDataModel
+import com.example.tv3.model2.VideoModel
+import com.example.tv3.viewModel.MainViewModel
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding : FragmentHomeBinding
 
+    private val viewModel: MainViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,9 +46,9 @@ class HomeFragment : Fragment() {
         transaction.commit()
 
         val gson = Gson()
-        val i =  context?.assets?.open("movies.json")
+        val i =  context?.assets?.open("temp.json")
         val br = BufferedReader(InputStreamReader(i))
-        val dataList : MoviesDataModel = gson.fromJson(br,MoviesDataModel::class.java)
+        val dataList : TvDataModel = gson.fromJson(br,TvDataModel::class.java)
 
         listFragment.bindData(dataList)
 
@@ -53,16 +58,16 @@ class HomeFragment : Fragment() {
 
         listFragment.setOnContentClickedListener {
             val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra("id",it.id)
+            intent.putExtra("videoUri",it.videoUri)
             startActivity(intent)
         }
     }
 
 
 
-    private fun updateBanner(movie: Detail) {
+    private fun updateBanner(movie: VideoModel) {
         binding.title.text = movie.title
-        val url = "https://www.themoviedb.org/t/p/w780" + movie.backdrop_path
+        val url = movie.backgroundImage
         Glide.with(this).load(url).into(binding.imgBanner)
     }
 }

@@ -1,0 +1,35 @@
+{
+  "videos": {
+    "title": "Videos",
+    "data": [
+      {
+        "videoUri": "https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/Y2meta.app%20-%20Copyright%20Free%20Nature%20video%20download%20_%20copyright%20free%20Nature%20video.mp4?alt=media&token=14b08985-d355-4ab5-a94f-d8b73e28a60d",
+        "backgroundImage": "https://cdn.dribbble.com/users/2479503/screenshots/6402160/placeholder.png",
+        "title": "video 1"
+      },
+      {
+        "videoUri": "https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/Y2meta.app%20-%20copyright%20free%20nature%20videos%20_%20No%20copyright%20video%20nature%20_%20Download%20copyright%20free%20nature%20video.mp4?alt=media&token=44585b74-89fe-4341-b5a5-018030d095df",
+        "backgroundImage": "https://img.freepik.com/free-vector/flat-clapperboard-icon_1063-38.jpg",
+        "title": "video 2"
+      },
+      {
+        "videoUri": "https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/Y2meta.app-Balloons.Luftballons.Globos.Mallorca.-(720p60).mp4?alt=media&token=24376242-79bb-4d51-a60c-330431c72330",
+        "backgroundImage": "https://cdn.dribbble.com/users/2479503/screenshots/6402160/placeholder.png",
+        "title": "video 3"
+      }
+    ]
+  },
+  "images": {
+    "title": "Images",
+    "data": [
+      {
+        "imageUri": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+        "title": "image 1"
+      },
+      {
+        "imageUri": "https://cdn.pixabay.com/photo/2016/05/05/02/37/sunset-1373171_1280.jpg",
+        "title": "image 2"
+      }
+    ]
+  }
+}

@@ -7,21 +7,20 @@ import com.example.tv3.R
 import com.example.tv3.model.DetailResponseModel
 
 class PlaybackActivity : FragmentActivity() {
+    private var videoUri : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_playback)
 
-        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("movie_detail",DetailResponseModel::class.java)
-        } else {
-            intent.getParcelableExtra<DetailResponseModel>("movie_detail")
+        if(intent != null && intent.hasExtra("videoUri")){
+            videoUri = intent.getStringExtra("videoUri")
         }
+
 
         val fragment = MyVideoFragment()
         val bundle = Bundle()
-        bundle.putParcelable("movie_detail", data)
+        bundle.putString("videoUri", videoUri)
         fragment.arguments = bundle
-
         if(savedInstanceState == null){
             supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
         }

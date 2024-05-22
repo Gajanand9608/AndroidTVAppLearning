@@ -4,7 +4,10 @@ import android.app.Application
 import com.example.tv3.api.ApiService
 import com.example.tv3.api.RetrofitHelper
 import com.example.tv3.api.TmdbRepo
+import dagger.hilt.android.HiltAndroidApp
 
+
+@HiltAndroidApp
 class MyApplication : Application() {
 
     lateinit var tmdbRepo : TmdbRepo
