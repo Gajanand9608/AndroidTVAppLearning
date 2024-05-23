@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.tv3.R
 import com.example.tv3.activities.DetailActivity
+import com.example.tv3.activities.ImageCarouselActivity
 import com.example.tv3.databinding.FragmentHomeBinding
 import com.example.tv3.model2.ImageModel
 import com.example.tv3.model2.TvDataModel
@@ -65,6 +66,11 @@ class HomeFragment : Fragment() {
         listFragment.setOnVideoContentClickedListener{
             val intent = Intent(context, PlaybackActivity::class.java)
             intent.putExtra("videoUri",it.videoUri)
+            startActivity(intent)
+        }
+
+        listFragment.setOnImageContentClickedListener {
+            val intent = Intent(context, ImageCarouselActivity::class.java)
             startActivity(intent)
         }
     }
