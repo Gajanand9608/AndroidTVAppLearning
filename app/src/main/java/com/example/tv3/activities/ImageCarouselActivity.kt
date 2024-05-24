@@ -15,6 +15,7 @@ import androidx.compose.animation.shrinkOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -45,6 +46,8 @@ import coil.compose.AsyncImage
 import com.example.tv3.R
 import com.example.tv3.activities.ui.theme.TV3Theme
 import com.example.tv3.model2.TvDataModel
+import com.example.tv3.model3.CommonTVDataModel
+import com.example.tv3.model3.Data
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -58,6 +61,7 @@ class ImageCarouselActivity : ComponentActivity() {
             TV3Theme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     ImageCarousel()
+
                 }
             }
         }
@@ -67,33 +71,42 @@ class ImageCarouselActivity : ComponentActivity() {
 
 @OptIn(ExperimentalTvMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
-fun ImageCarousel(){
+fun ImageCarousel() {
     val context = LocalContext.current
     val gson = Gson()
-    val i =  context.assets?.open("temp.json")
+    val i = context.assets?.open("temp.json")
     val br = BufferedReader(InputStreamReader(i))
-    val dataList : TvDataModel = gson.fromJson(br, TvDataModel::class.java)
-    val images = dataList.images.data
-        Carousel(
-            itemCount = images.size,
-            autoScrollDurationMillis = 3000,
-            modifier = Modifier
-                .fillMaxSize(),
-            carouselIndicator = {
+    val dataList: CommonTVDataModel = gson.fromJson(br, CommonTVDataModel::class.java)
+    val images = dataList.images.data.toMutableList()
+    val videos = dataList.videos.data
 
-            }
-        ) { indexOfCarouselItem ->
-            val currentImageModel = images[indexOfCarouselItem]
-            AsyncImage(
-                model = currentImageModel.imageUri,
-                contentDescription = null,
-                placeholder = painterResource(
-                    id = R.drawable.bg_banner
-                ),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize().animateEnterExit(
-                    enter = scaleIn(animationSpec = tween(durationMillis = 1000, easing = FastOutSlowInEasing)),
+//    val temp = Data(backgroundImage = "https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/image.png?alt=media&token=4e4dc296-fd0e-4023-b16f-c62a9ff2e4fd", title = "Play Image SlideShow", videoUri = "")
+//    images.add(0,temp)
+    Carousel(
+        itemCount = images.size,
+        autoScrollDurationMillis = 3000,
+        modifier = Modifier
+            .fillMaxSize(),
+        carouselIndicator = {}
+    ) { indexOfCarouselItem ->
+        val currentImageModel = images[indexOfCarouselItem]
+        AsyncImage(
+            model = currentImageModel.backgroundImage,
+            contentDescription = null,
+            placeholder = painterResource(
+                id = R.drawable.bg_banner
+            ),
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .animateEnterExit(
+                    enter = scaleIn(
+                        animationSpec = tween(
+                            durationMillis = 1000,
+                            easing = FastOutSlowInEasing
+                        )
+                    ),
                 )
-            )
-        }
+        )
+    }
 }

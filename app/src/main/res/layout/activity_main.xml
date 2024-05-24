@@ -9,61 +9,6 @@
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:nextFocusRight="@id/blfNavBar" />
-
-    <androidx.leanback.widget.BrowseFrameLayout
-        android:id="@+id/blfNavBar"
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:background="#000000"
-        android:nextFocusLeft="@id/container">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/btn_search"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="16dp"
-                android:background="@drawable/selector_menu"
-                android:drawableLeft="@drawable/ic_search"
-                android:drawablePadding="16dp"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:text="Search"
-                app:layout_constraintVertical_chainStyle="packed"
-                android:textColor="@color/text_selector_white_grey"
-                app:layout_constraintStart_toStartOf="@+id/cl"
-                app:layout_constraintEnd_toEndOf="@+id/cl"
-                app:layout_constraintBottom_toTopOf="@+id/btn_home"
-                app:layout_constraintTop_toTopOf="@+id/cl" />
-
-            <TextView
-                android:id="@+id/btn_home"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/selector_menu"
-                android:drawableLeft="@drawable/ic_home"
-                android:drawablePadding="16dp"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:text="Home"
-                app:layout_constraintVertical_chainStyle="packed"
-                android:textColor="@color/text_selector_white_grey"
-                app:layout_constraintStart_toStartOf="@+id/btn_search"
-                app:layout_constraintEnd_toEndOf="@+id/btn_search"
-                app:layout_constraintBottom_toBottomOf="@+id/cl"
-                app:layout_constraintTop_toBottomOf="@+id/btn_search" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.leanback.widget.BrowseFrameLayout>
+        android:layout_height="match_parent" />
 
 </merge>

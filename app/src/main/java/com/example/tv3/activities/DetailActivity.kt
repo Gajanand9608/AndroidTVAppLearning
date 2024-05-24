@@ -2,25 +2,12 @@ package com.example.tv3.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.tv3.MyApplication
-import com.example.tv3.R
-import com.example.tv3.api.ResponseState
 import com.example.tv3.databinding.ActivityDetailBinding
-import com.example.tv3.fragment.ListFragment
 import com.example.tv3.model.DetailResponseModel
-import com.example.tv3.model.MovieCastDetailModel
-import com.example.tv3.model2.VideoModel
+import com.example.tv3.model2.CommonDataModel
 import com.example.tv3.player.PlaybackActivity
-import com.example.tv3.utils.Common
-import com.example.tv3.utils.Common.Companion.isEllipsized
-import com.example.tv3.viewModel.DetailViewModel
-import com.example.tv3.viewModel.DetailViewModelFactory
 
 class DetailActivity : FragmentActivity() {
 
@@ -51,7 +38,7 @@ class DetailActivity : FragmentActivity() {
         }
     }
 
-    private fun setData(model: VideoModel) {
+    private fun setData(model: CommonDataModel) {
         binding.title.text = model.title
 
         val path = model.backgroundImage

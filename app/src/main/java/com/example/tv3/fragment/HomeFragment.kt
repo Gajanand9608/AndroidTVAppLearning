@@ -9,12 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.tv3.R
-import com.example.tv3.activities.DetailActivity
 import com.example.tv3.activities.ImageCarouselActivity
 import com.example.tv3.databinding.FragmentHomeBinding
 import com.example.tv3.model2.ImageModel
 import com.example.tv3.model2.TvDataModel
-import com.example.tv3.model2.VideoModel
+import com.example.tv3.model2.CommonDataModel
 import com.example.tv3.player.PlaybackActivity
 import com.example.tv3.viewModel.MainViewModel
 import com.google.gson.Gson
@@ -53,7 +52,7 @@ class HomeFragment : Fragment() {
         val br = BufferedReader(InputStreamReader(i))
         val dataList : TvDataModel = gson.fromJson(br,TvDataModel::class.java)
 
-        listFragment.bindData(dataList)
+//        listFragment.bindData(dataList)
 
         listFragment.setOnVideoContentSelectedListener {
             updateBanner(it)
@@ -77,14 +76,12 @@ class HomeFragment : Fragment() {
 
 
 
-    private fun updateBanner(movie: VideoModel) {
-        binding.title.text = movie.title
+    private fun updateBanner(movie: CommonDataModel) {
         val url = movie.backgroundImage
         Glide.with(this).load(url).into(binding.imgBanner)
     }
 
     private fun updateBanner2(image: ImageModel) {
-        binding.title.text = image.title
         val url = image.imageUri
         Glide.with(this).load(url).into(binding.imgBanner)
     }

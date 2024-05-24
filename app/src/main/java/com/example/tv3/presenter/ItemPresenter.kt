@@ -1,19 +1,14 @@
 package com.example.tv3.presenter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.leanback.widget.Presenter
 import com.bumptech.glide.Glide
 import com.example.tv3.R
-import com.example.tv3.model.Detail
-import com.example.tv3.model.MoviesDataModel
-import com.example.tv3.model.Result
 import com.example.tv3.model2.ImageModel
-import com.example.tv3.model2.VideoModel
+import com.example.tv3.model2.CommonDataModel
 
 class ItemPresenter : Presenter() {
     override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
@@ -29,8 +24,8 @@ class ItemPresenter : Presenter() {
     override fun onBindViewHolder(viewHolder: ViewHolder?, item: Any?) {
         val imageview = viewHolder?.view?.findViewById<ImageView>(R.id.poster_image)
         var url = ""
-        if(item is VideoModel){
-            val content = item as? VideoModel
+        if(item is CommonDataModel){
+            val content = item as? CommonDataModel
             url = content?.backgroundImage.toString()
         }else{
             val content = item as? ImageModel

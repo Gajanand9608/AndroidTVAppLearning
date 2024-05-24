@@ -18,7 +18,7 @@ import com.example.tv3.fragment.SearchFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : FragmentActivity(), View.OnKeyListener {
+class MainActivity : FragmentActivity() {
 
     lateinit var navBar: BrowseFrameLayout
     lateinit var fragmentContainer: FrameLayout
@@ -36,16 +36,6 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         setContentView(R.layout.activity_main)
 
         fragmentContainer = findViewById(R.id.container)
-        navBar = findViewById(R.id.blfNavBar)
-
-        btnSearch = findViewById(R.id.btn_search)
-        btnHome = findViewById(R.id.btn_home)
-
-        btnSearch.setOnKeyListener(this)
-        btnHome.setOnKeyListener(this)
-
-        lastSelectedMenu = btnHome
-        lastSelectedMenu.isActivated = true
         changeFragment(HomeFragment())
     }
 
@@ -53,7 +43,7 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
         transaction.commit()
-        closeMenu()
+//        closeMenu()
     }
 
     fun openMenu() {
@@ -72,64 +62,59 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         SIDE_MENU = false
     }
 
-    override fun onKey(view: View?, i: Int, key_event: KeyEvent?): Boolean {
-        when (i) {
-            KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
+//    override fun onKey(view: View?, i: Int, key_event: KeyEvent?): Boolean {
+//        when (i) {
+//            KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
+//
+//                lastSelectedMenu.isActivated = false
+//                view?.isActivated = true
+//                lastSelectedMenu = view!!
+//
+//                when (view.id) {
+//                    R.id.btn_search -> {
+//                        selectedMenu = Constants.MENU_SEARCH
+//                        changeFragment(SearchFragment())
+//                    }
+//                    R.id.btn_home -> {
+//                        selectedMenu = Constants.MENU_HOME
+//                        changeFragment(HomeFragment())
+//                    }
+//                }
+//
+//            }
+//
+//            KeyEvent.KEYCODE_DPAD_LEFT -> {
+//                if (!SIDE_MENU) {
+//                    switchToLastSelectedMenu()
+//                    openMenu()
+//                    SIDE_MENU = true
+//                }
+//            }
+//        }
+//        return false
+//    }
 
-                lastSelectedMenu.isActivated = false
-                view?.isActivated = true
-                lastSelectedMenu = view!!
-
-                when (view.id) {
-                    R.id.btn_search -> {
-                        selectedMenu = Constants.MENU_SEARCH
-                        changeFragment(SearchFragment())
-                    }
-                    R.id.btn_home -> {
-                        selectedMenu = Constants.MENU_HOME
-                        changeFragment(HomeFragment())
-                    }
-                }
-
-            }
-
-            KeyEvent.KEYCODE_DPAD_LEFT -> {
-                if (!SIDE_MENU) {
-                    switchToLastSelectedMenu()
-                    openMenu()
-                    SIDE_MENU = true
-                }
-            }
-        }
-        return false
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT && SIDE_MENU) {
-            SIDE_MENU = false
-            closeMenu()
-        }
-
-        return super.onKeyDown(keyCode, event)
-    }
+//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+//        if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT && SIDE_MENU) {
+//            SIDE_MENU = false
+//            closeMenu()
+//        }
+//
+//        return super.onKeyDown(keyCode, event)
+//    }
 
     override fun onBackPressed() {
-        if (SIDE_MENU) {
-            SIDE_MENU = false
-            closeMenu()
-        } else {
-            super.onBackPressed()
-        }
+        super.onBackPressed()
     }
 
-    private fun switchToLastSelectedMenu() {
-        when (selectedMenu) {
-            Constants.MENU_SEARCH -> {
-                btnSearch.requestFocus()
-            }
-            Constants.MENU_HOME -> {
-                btnHome.requestFocus()
-            }
-        }
-    }
+//    private fun switchToLastSelectedMenu() {
+//        when (selectedMenu) {
+//            Constants.MENU_SEARCH -> {
+//                btnSearch.requestFocus()
+//            }
+//            Constants.MENU_HOME -> {
+//                btnHome.requestFocus()
+//            }
+//        }
+//    }
 }
