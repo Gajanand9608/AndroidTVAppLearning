@@ -48,6 +48,7 @@ import com.example.tv3.activities.ui.theme.TV3Theme
 import com.example.tv3.model2.TvDataModel
 import com.example.tv3.model3.CommonTVDataModel
 import com.example.tv3.model3.Data
+import com.example.tv3.model4.NewComposeModel
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -61,7 +62,6 @@ class ImageCarouselActivity : ComponentActivity() {
             TV3Theme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     ImageCarousel()
-
                 }
             }
         }
@@ -76,9 +76,9 @@ fun ImageCarousel() {
     val gson = Gson()
     val i = context.assets?.open("temp.json")
     val br = BufferedReader(InputStreamReader(i))
-    val dataList: CommonTVDataModel = gson.fromJson(br, CommonTVDataModel::class.java)
-    val images = dataList.images.data.toMutableList()
-    val videos = dataList.videos.data
+    val model: NewComposeModel = gson.fromJson(br, NewComposeModel::class.java)
+    val list2 = model.list
+    val images = list2.get(1).data
 
 //    val temp = Data(backgroundImage = "https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/image.png?alt=media&token=4e4dc296-fd0e-4023-b16f-c62a9ff2e4fd", title = "Play Image SlideShow", videoUri = "")
 //    images.add(0,temp)
