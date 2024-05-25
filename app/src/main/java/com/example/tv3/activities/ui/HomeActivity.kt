@@ -48,7 +48,8 @@ class HomeActivity : ComponentActivity() {
         setContent {
             TV3Theme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    App()
+//                    App()
+                    ImmersiveListScreen()
                 }
             }
         }
