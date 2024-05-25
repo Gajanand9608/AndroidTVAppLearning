@@ -1,7 +1,6 @@
 package com.example.tv3.api
 
-import com.example.tv3.model.DetailResponseModel
-import com.example.tv3.model.MovieCastDetailModel
+import com.example.tv3.model4.NewComposeModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -12,5 +11,5 @@ interface ApiService {
     suspend fun getMovieDetail(
         @Path("movie_id") id: Int,
         @Query("api_key") apiKey : String
-    ) : Response<DetailResponseModel>
+    ) : Response<NewComposeModel>
 }

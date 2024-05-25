@@ -45,9 +45,6 @@ import androidx.tv.material3.Surface
 import coil.compose.AsyncImage
 import com.example.tv3.R
 import com.example.tv3.activities.ui.theme.TV3Theme
-import com.example.tv3.model2.TvDataModel
-import com.example.tv3.model3.CommonTVDataModel
-import com.example.tv3.model3.Data
 import com.example.tv3.model4.NewComposeModel
 import com.google.gson.Gson
 import java.io.BufferedReader

@@ -7,8 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tv3.api.ResponseState
 import com.example.tv3.api.TmdbRepo
-import com.example.tv3.model.DetailResponseModel
-import com.example.tv3.model.MovieCastDetailModel
+import com.example.tv3.model4.NewComposeModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -17,8 +16,8 @@ class DetailViewModel(
     id: Int
 ) : ViewModel() {
 
-    private val _movieDetailLiveData : MutableLiveData<ResponseState<DetailResponseModel>> = MutableLiveData(null)
-    val movieDetailLiveData : LiveData<ResponseState<DetailResponseModel>> = _movieDetailLiveData
+    private val _movieDetailLiveData : MutableLiveData<ResponseState<NewComposeModel>> = MutableLiveData(null)
+    val movieDetailLiveData : LiveData<ResponseState<NewComposeModel>> = _movieDetailLiveData
 
     init {
         getMovieDetailById(id = id)

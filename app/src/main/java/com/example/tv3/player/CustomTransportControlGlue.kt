@@ -10,10 +10,7 @@ import androidx.leanback.media.PlaybackTransportControlGlue
 import androidx.leanback.widget.Action
 import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.PlaybackControlsRow
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import com.example.tv3.model.DetailResponseModel
+
 
 class CustomTransportControlGlue(
     context: Context,
@@ -72,26 +69,7 @@ class CustomTransportControlGlue(
 
     fun loadMovieInfo(uri: String?){
         title = "No Title"
-
         playerAdapter.setDataSource(Uri.parse(uri))
-
-
-//        val path = "https://www.themoviedb.org/t/p/w780" + (detailResponseModel?.backdrop_path ?: "")
-//        Glide.with(context)
-//            .asBitmap()
-//            .load(path)
-//            .into(object : CustomTarget<Bitmap>(){
-//                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-//                    controlsRow.setImageBitmap(context,resource)
-//                    host.notifyPlaybackRowChanged()
-//                }
-//
-//                override fun onLoadCleared(placeholder: Drawable?) {
-//                    controlsRow.setImageBitmap(context,null)
-//                    host.notifyPlaybackRowChanged()
-//                }
-//            })
-
         playWhenPrepared()
     }
 }

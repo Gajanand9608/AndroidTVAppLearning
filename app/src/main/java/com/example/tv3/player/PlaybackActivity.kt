@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.example.tv3.R
-import com.example.tv3.model.DetailResponseModel
 
 class PlaybackActivity : FragmentActivity() {
     private var videoUri : String? = null
