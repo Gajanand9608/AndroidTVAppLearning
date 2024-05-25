@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -49,13 +50,14 @@ import com.example.tv3.model4.Data
 import com.example.tv3.model4.ImmersiveItems
 import com.example.tv3.model4.NewComposeModel
 import com.example.tv3.player.PlaybackActivity
+import com.example.tv3.viewModel.MainViewModel
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
 @ExperimentalTvMaterial3Api
 @Composable
-fun ImmersiveListScreen() {
+fun ImmersiveListScreen(mainViewModel: MainViewModel) {
 
     val context = LocalContext.current
     val gson = Gson()
@@ -64,9 +66,11 @@ fun ImmersiveListScreen() {
     val model: NewComposeModel = gson.fromJson(br, NewComposeModel::class.java)
     val list2 = model.list
 
+    val backgroundImage = mainViewModel.focusImageState.value
+
     Box(modifier = Modifier.fillMaxSize()) {
         AsyncImage(
-            model = R.drawable.bg_banner,
+            model = backgroundImage ?: R.drawable.bg_banner,
             contentDescription = null,
             placeholder = painterResource(
                 id = R.drawable.bg_banner
@@ -87,14 +91,16 @@ fun ImmersiveListScreen() {
         ) {
 
         }
-        ScrollableItems(list2)
+        ScrollableItems(list2){
+            mainViewModel.setFocusImageState(it)
+        }
     }
 }
 
 
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
-fun ScrollableItems(list2: List<ImmersiveItems>) {
+fun ScrollableItems(list2: List<ImmersiveItems>, onFocus : (String?) -> Unit) {
 
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
@@ -128,7 +134,9 @@ fun ScrollableItems(list2: List<ImmersiveItems>) {
                 )
             ) {
                 itemsIndexed(it.data) { index, item ->
-                    BannerItem(it, item)
+                    BannerItem(it, item){
+                        onFocus(it)
+                    }
                 }
             }
         }
@@ -138,7 +146,7 @@ fun ScrollableItems(list2: List<ImmersiveItems>) {
 
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
-fun BannerItem(immersiveItems: ImmersiveItems, item: Data) {
+fun BannerItem(immersiveItems: ImmersiveItems, item: Data, onFocus : (String?) -> Unit) {
     val cardWidth = 196.dp
     val cardHeight = 110.dp
     val context = LocalContext.current
@@ -146,7 +154,12 @@ fun BannerItem(immersiveItems: ImmersiveItems, item: Data) {
     Column(
         modifier = Modifier
             .width(cardWidth)
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .onFocusEvent {
+                if (it.isFocused) {
+                    onFocus(item.backgroundImage)
+                }
+            },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
