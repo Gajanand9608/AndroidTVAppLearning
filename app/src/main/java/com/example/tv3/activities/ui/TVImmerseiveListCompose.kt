@@ -2,6 +2,7 @@ package com.example.tv3.activities.ui
 
 import android.content.Intent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -107,6 +108,7 @@ fun ScrollableItems(list2: List<ImmersiveItems>, onFocus : (String?) -> Unit) {
     val offsetHeight = screenHeight / 2
     val cardSpacing = 20.dp
     val scrollState = rememberTvLazyListState()
+    val slideShowButtonUrl = "https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/Firefly%20image%20slide%20slideshow%20play%20button%20with%20vibrat%20color%2046632.jpg?alt=media&token=efce5349-3af2-4330-b281-51dc8f6ce91b"
 
     TvLazyColumn(
         state = scrollState,
@@ -133,8 +135,16 @@ fun ScrollableItems(list2: List<ImmersiveItems>, onFocus : (String?) -> Unit) {
                     bottom = 30.dp
                 )
             ) {
+                if(it.title.contains("Image")){
+                    item {
+                        val item = Data(title = "Play Slideshow",backgroundImage = slideShowButtonUrl )
+                        BannerItem(it, item, enabledClick = true){
+                            onFocus(it)
+                        }
+                    }
+                }
                 itemsIndexed(it.data) { index, item ->
-                    BannerItem(it, item){
+                    BannerItem(it, item,enabledClick = false){
                         onFocus(it)
                     }
                 }
@@ -146,7 +156,7 @@ fun ScrollableItems(list2: List<ImmersiveItems>, onFocus : (String?) -> Unit) {
 
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
-fun BannerItem(immersiveItems: ImmersiveItems, item: Data, onFocus : (String?) -> Unit) {
+fun BannerItem(immersiveItems: ImmersiveItems, item: Data,enabledClick : Boolean = false ,onFocus : (String?) -> Unit) {
     val cardWidth = 196.dp
     val cardHeight = 110.dp
     val context = LocalContext.current
@@ -169,7 +179,7 @@ fun BannerItem(immersiveItems: ImmersiveItems, item: Data, onFocus : (String?) -
                     val intent = Intent(context, PlaybackActivity::class.java)
                     intent.putExtra("videoUri", item.videoUri)
                     ContextCompat.startActivity(context, intent, null)
-                } else {
+                } else if(enabledClick) {
                     val intent = Intent(context, ImageCarouselActivity::class.java)
                     ContextCompat.startActivity(context, intent, null)
                 }
