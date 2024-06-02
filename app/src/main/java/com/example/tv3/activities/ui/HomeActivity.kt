@@ -18,11 +18,14 @@ class HomeActivity : ComponentActivity() {
     @OptIn(ExperimentalTvMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContent {
+            val videos = mainViewModel.videoState.value
+            val nonNullVideos = videos?.filterNotNull() ?: emptyList()
             TV3Theme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    ImmersiveListScreen(mainViewModel)
+                    ImmersiveListScreen(nonNullVideos,mainViewModel)
                 }
             }
         }

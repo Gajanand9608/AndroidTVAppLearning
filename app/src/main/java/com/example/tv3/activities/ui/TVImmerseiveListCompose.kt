@@ -2,7 +2,6 @@ package com.example.tv3.activities.ui
 
 import android.content.Intent
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,7 +31,6 @@ import androidx.core.content.ContextCompat
 import androidx.tv.foundation.PivotOffsets
 import androidx.tv.foundation.lazy.list.TvLazyColumn
 import androidx.tv.foundation.lazy.list.TvLazyRow
-import androidx.tv.foundation.lazy.list.items
 import androidx.tv.foundation.lazy.list.itemsIndexed
 import androidx.tv.foundation.lazy.list.rememberTvLazyListState
 import androidx.tv.material3.Border
@@ -47,25 +45,20 @@ import com.example.tv3.activities.ImageCarouselActivity
 import com.example.tv3.activities.ui.theme.LightBlack1
 import com.example.tv3.activities.ui.theme.LightBlack2
 import com.example.tv3.activities.ui.theme.Typography
-import com.example.tv3.model4.Data
-import com.example.tv3.model4.ImmersiveItems
-import com.example.tv3.model4.NewComposeModel
+import com.example.tv3.model_new.VideoData
 import com.example.tv3.player.PlaybackActivity
 import com.example.tv3.viewModel.MainViewModel
-import com.google.gson.Gson
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 @ExperimentalTvMaterial3Api
 @Composable
-fun ImmersiveListScreen(mainViewModel: MainViewModel) {
+fun ImmersiveListScreen(videos: List<VideoData>, mainViewModel: MainViewModel) {
 
     val context = LocalContext.current
-    val gson = Gson()
-    val i = context.assets?.open("temp.json")
-    val br = BufferedReader(InputStreamReader(i))
-    val model: NewComposeModel = gson.fromJson(br, NewComposeModel::class.java)
-    val list2 = model.list
+//    val gson = Gson()
+//    val i = context.assets?.open("temp.json")
+//    val br = BufferedReader(InputStreamReader(i))
+//    val model: NewComposeModel = gson.fromJson(br, NewComposeModel::class.java)
+//    val list2 = model.list
 
     val backgroundImage = mainViewModel.focusImageState.value
 
@@ -92,7 +85,8 @@ fun ImmersiveListScreen(mainViewModel: MainViewModel) {
         ) {
 
         }
-        ScrollableItems(list2){
+
+        ScrollableItems(videos) {
             mainViewModel.setFocusImageState(it)
         }
     }
@@ -101,14 +95,14 @@ fun ImmersiveListScreen(mainViewModel: MainViewModel) {
 
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
-fun ScrollableItems(list2: List<ImmersiveItems>, onFocus : (String?) -> Unit) {
+fun ScrollableItems(list2: List<VideoData>, onFocus: (String?) -> Unit) {
 
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
     val offsetHeight = screenHeight / 2
     val cardSpacing = 20.dp
     val scrollState = rememberTvLazyListState()
-    val slideShowButtonUrl = "https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/Firefly%20image%20slide%20slideshow%20play%20button%20with%20vibrat%20color%2046632.jpg?alt=media&token=efce5349-3af2-4330-b281-51dc8f6ce91b"
+
 
     TvLazyColumn(
         state = scrollState,
@@ -117,12 +111,15 @@ fun ScrollableItems(list2: List<ImmersiveItems>, onFocus : (String?) -> Unit) {
             .fillMaxHeight(0.5f)
             .offset(y = offsetHeight)
     ) {
-        items(list2) {
+        item {
             Text(
-                text = it.title.toString(),
+                text = "Videos",
                 style = Typography.headlineLarge,
                 modifier = Modifier.padding(start = 60.dp)
             )
+        }
+
+        item {
             TvLazyRow(
                 pivotOffsets = PivotOffsets(0.1f),
                 horizontalArrangement = Arrangement.spacedBy(cardSpacing),
@@ -135,20 +132,13 @@ fun ScrollableItems(list2: List<ImmersiveItems>, onFocus : (String?) -> Unit) {
                     bottom = 30.dp
                 )
             ) {
-                if(it.title.contains("Image")){
-                    item {
-                        val item = Data(title = "Play Slideshow",backgroundImage = slideShowButtonUrl )
-                        BannerItem(it, item, enabledClick = true){
-                            onFocus(it)
-                        }
-                    }
-                }
-                itemsIndexed(it.data) { index, item ->
-                    BannerItem(it, item,enabledClick = false){
+                itemsIndexed(list2) { index, item ->
+                    BannerItem(item, enabledClick = false) {
                         onFocus(it)
                     }
                 }
             }
+
         }
     }
 }
@@ -156,10 +146,14 @@ fun ScrollableItems(list2: List<ImmersiveItems>, onFocus : (String?) -> Unit) {
 
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
-fun BannerItem(immersiveItems: ImmersiveItems, item: Data,enabledClick : Boolean = false ,onFocus : (String?) -> Unit) {
+fun BannerItem(
+    item: VideoData, enabledClick: Boolean = false,
+    onFocus: (String?) -> Unit
+) {
     val cardWidth = 196.dp
     val cardHeight = 110.dp
     val context = LocalContext.current
+    val slideShowButtonUrl = "https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/Firefly%20image%20slide%20slideshow%20play%20button%20with%20vibrat%20color%2046632.jpg?alt=media&token=efce5349-3af2-4330-b281-51dc8f6ce91b"
 
     Column(
         modifier = Modifier
@@ -167,7 +161,7 @@ fun BannerItem(immersiveItems: ImmersiveItems, item: Data,enabledClick : Boolean
             .wrapContentHeight()
             .onFocusEvent {
                 if (it.isFocused) {
-                    onFocus(item.backgroundImage)
+                    onFocus(item.videoUrl)
                 }
             },
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -175,11 +169,11 @@ fun BannerItem(immersiveItems: ImmersiveItems, item: Data,enabledClick : Boolean
     ) {
         Card(
             onClick = {
-                if (immersiveItems.title == "Videos") {
+                if ("Videos" == "Videos") {
                     val intent = Intent(context, PlaybackActivity::class.java)
-                    intent.putExtra("videoUri", item.videoUri)
+                    intent.putExtra("videoUri", item.videoUrl)
                     ContextCompat.startActivity(context, intent, null)
-                } else if(enabledClick) {
+                } else if (enabledClick) {
                     val intent = Intent(context, ImageCarouselActivity::class.java)
                     ContextCompat.startActivity(context, intent, null)
                 }
@@ -203,7 +197,7 @@ fun BannerItem(immersiveItems: ImmersiveItems, item: Data,enabledClick : Boolean
             ),
         ) {
             AsyncImage(
-                model = item.backgroundImage,
+                model = item.imageUrl,
                 contentDescription = item.title,
                 contentScale = ContentScale.FillBounds,
                 placeholder = painterResource(R.drawable.bg_banner),

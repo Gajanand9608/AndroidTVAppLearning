@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "950351946980",
+    "firebase_url": "https://chatapp-d37e0-default-rtdb.firebaseio.com",
+    "project_id": "chatapp-d37e0",
+    "storage_bucket": "chatapp-d37e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950351946980:android:fd36cb26a19499ec6d38f1",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPi6QNq8PJwBLUmGhAYdCVa5VMtxjnKuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950351946980:android:35cfe3ecc328ad736d38f1",
+        "android_client_info": {
+          "package_name": "com.example.mytvapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPi6QNq8PJwBLUmGhAYdCVa5VMtxjnKuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950351946980:android:09c1254a030f43fc6d38f1",
+        "android_client_info": {
+          "package_name": "com.example.tv3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPi6QNq8PJwBLUmGhAYdCVa5VMtxjnKuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
