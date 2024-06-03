@@ -54,11 +54,6 @@ import com.example.tv3.viewModel.MainViewModel
 fun ImmersiveListScreen(videos: List<VideoData>, mainViewModel: MainViewModel) {
 
     val context = LocalContext.current
-//    val gson = Gson()
-//    val i = context.assets?.open("temp.json")
-//    val br = BufferedReader(InputStreamReader(i))
-//    val model: NewComposeModel = gson.fromJson(br, NewComposeModel::class.java)
-//    val list2 = model.list
 
     val backgroundImage = mainViewModel.focusImageState.value
 
@@ -161,7 +156,7 @@ fun BannerItem(
             .wrapContentHeight()
             .onFocusEvent {
                 if (it.isFocused) {
-                    onFocus(item.videoUrl)
+                    onFocus(item.imageUrl)
                 }
             },
         horizontalAlignment = Alignment.CenterHorizontally,
