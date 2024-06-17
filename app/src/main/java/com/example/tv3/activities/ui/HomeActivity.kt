@@ -14,7 +14,7 @@ import com.example.tv3.viewModel.MainViewModel
 
 class HomeActivity : ComponentActivity() {
 
-    val mainViewModel : MainViewModel by viewModels()
+    private val mainViewModel : MainViewModel by viewModels()
     @OptIn(ExperimentalTvMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +22,12 @@ class HomeActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val videos = mainViewModel.videoState.value
+            val images = mainViewModel.imageUrlState.value
             val nonNullVideos = videos?.filterNotNull() ?: emptyList()
+            val nonNullImages = images?.filterNotNull() ?: emptyList()
             TV3Theme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    ImmersiveListScreen(nonNullVideos,mainViewModel)
+                    ImmersiveListScreen(nonNullVideos,nonNullImages,mainViewModel)
                 }
             }
         }
