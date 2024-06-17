@@ -137,7 +137,7 @@ fun ScrollableItems(
                 )
             ) {
                 itemsIndexed(list2) { index, item ->
-                    BannerItem(ItemType.VIDEO, item, null, enabledClick = false) {
+                    BannerItem(index,ItemType.VIDEO, item, null, enabledClick = false) {
                         onFocus(it)
                     }
                 }
@@ -168,12 +168,12 @@ fun ScrollableItems(
                 item {
                     val slideShowButtonUrl =
                         "https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/Firefly%20image%20slide%20slideshow%20play%20button%20with%20vibrat%20color%2046632.jpg?alt=media&token=efce5349-3af2-4330-b281-51dc8f6ce91b"
-                    BannerItem(ItemType.IMAGE, null, slideShowButtonUrl , enabledClick = true) {
+                    BannerItem(-1, ItemType.IMAGE, null, slideShowButtonUrl, enabledClick = true) {
                         onFocus(it)
                     }
                 }
                 itemsIndexed(images) { index, item ->
-                    BannerItem(ItemType.IMAGE, null, item, enabledClick = false) {
+                    BannerItem(index, ItemType.IMAGE, null, item, enabledClick = false) {
                         onFocus(it)
                     }
                 }
@@ -186,7 +186,8 @@ fun ScrollableItems(
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun BannerItem(
-    itemType: ItemType, item: VideoData?, imageUrl: String?,
+    index: Int, itemType: ItemType, item: VideoData?,
+    imageUrl: String?,
     enabledClick: Boolean = false,
     onFocus: (String?) -> Unit
 ) {
@@ -289,7 +290,7 @@ fun BannerItem(
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = item?.title.toString(), style = Typography.bodyLarge)
+            if(index == -1)Text(text = "Play Slideshow", style = Typography.bodyLarge)
         }
     }
 }
