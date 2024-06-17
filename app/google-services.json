@@ -1,65 +1,90 @@
 {
   "project_info": {
-    "project_number": "950351946980",
-    "firebase_url": "https://chatapp-d37e0-default-rtdb.firebaseio.com",
-    "project_id": "chatapp-d37e0",
-    "storage_bucket": "chatapp-d37e0.appspot.com"
+    "project_number": "248121629616",
+    "firebase_url": "https://anu---hrflyerapp-default-rtdb.firebaseio.com",
+    "project_id": "anu---hrflyerapp",
+    "storage_bucket": "anu---hrflyerapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:950351946980:android:fd36cb26a19499ec6d38f1",
-        "android_client_info": {
-          "package_name": "com.android.application"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAPi6QNq8PJwBLUmGhAYdCVa5VMtxjnKuM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:950351946980:android:35cfe3ecc328ad736d38f1",
-        "android_client_info": {
-          "package_name": "com.example.mytvapplication"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAPi6QNq8PJwBLUmGhAYdCVa5VMtxjnKuM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:950351946980:android:09c1254a030f43fc6d38f1",
+        "mobilesdk_app_id": "1:248121629616:android:e58cc758594fba94e49475",
         "android_client_info": {
           "package_name": "com.example.tv3"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "248121629616-ekpsck9568g2ffqvcufsvb0lmac9n4j4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tv3",
+            "certificate_hash": "5269f67b75da218bbfcc69fd9193dc45c150bd35"
+          }
+        },
+        {
+          "client_id": "248121629616-urfi65a3007qjtfv4hgsobgq5usae4g4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAPi6QNq8PJwBLUmGhAYdCVa5VMtxjnKuM"
+          "current_key": "AIzaSyBvjvLSoyUH0nPVn4YrAK5BJHqK4XmsLts"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "248121629616-urfi65a3007qjtfv4hgsobgq5usae4g4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248121629616:android:47c3b030f7153360e49475",
+        "android_client_info": {
+          "package_name": "com.hrflyerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "248121629616-lg4tq9ebg9tp33vmfj9i1ul6ui3d5e1r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hrflyerapp",
+            "certificate_hash": "5269f67b75da218bbfcc69fd9193dc45c150bd35"
+          }
+        },
+        {
+          "client_id": "248121629616-qn00h7h03dnfj6026fttfcj2kh3qufk5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hrflyerapp",
+            "certificate_hash": "f6428e6ba3d72f166833c226b704b61b71187cfe"
+          }
+        },
+        {
+          "client_id": "248121629616-urfi65a3007qjtfv4hgsobgq5usae4g4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvjvLSoyUH0nPVn4YrAK5BJHqK4XmsLts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "248121629616-urfi65a3007qjtfv4hgsobgq5usae4g4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

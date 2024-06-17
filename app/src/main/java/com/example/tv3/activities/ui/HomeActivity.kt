@@ -23,11 +23,13 @@ class HomeActivity : ComponentActivity() {
         setContent {
             val videos = mainViewModel.videoState.value
             val images = mainViewModel.imageUrlState.value
+            val videoUrls = mainViewModel.videoUrlState.value
             val nonNullVideos = videos?.filterNotNull() ?: emptyList()
             val nonNullImages = images?.filterNotNull() ?: emptyList()
+            val nonNullVideoUrls = videoUrls?.filterNotNull() ?: emptyList()
             TV3Theme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    ImmersiveListScreen(nonNullVideos,nonNullImages,mainViewModel)
+                    ImmersiveListScreen(nonNullImages,nonNullVideoUrls,mainViewModel)
                 }
             }
         }

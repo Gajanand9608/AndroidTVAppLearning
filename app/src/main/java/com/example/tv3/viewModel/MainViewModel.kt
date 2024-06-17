@@ -1,6 +1,5 @@
 package com.example.tv3.viewModel
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -15,13 +14,10 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import javax.inject.Inject
 
 
@@ -37,11 +33,15 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private var _imageUrlMutableState : MutableState<List<String?>?> = mutableStateOf(null)
     val imageUrlState : State<List<String?>?> = _imageUrlMutableState
 
+    private var _videoMutableState : MutableState<List<String?>?> = mutableStateOf(null)
+    val videoUrlState : State<List<String?>?> = _videoMutableState
+
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            listImageUrls()
-            fetchDataFromFirebase()
+            fetchImages()
+            fetchVideos()
+//            fetchDataFromFirebase()
         }
     }
 
@@ -68,9 +68,9 @@ class MainViewModel @Inject constructor() : ViewModel() {
         myRef.addValueEventListener(postListener)
     }
 
-    private suspend fun listImageUrls(): List<String> {
+    private suspend fun fetchImages() {
         val storage = FirebaseStorage.getInstance()
-        val storageRef = storage.reference.child("uploads/images")
+        val storageRef = storage.reference.child("tech_hr/images")
 
         val urls = mutableListOf<String>()
 
@@ -87,7 +87,27 @@ class MainViewModel @Inject constructor() : ViewModel() {
             e.printStackTrace()
         }
 
-        return urls
+    }
+
+    private suspend fun fetchVideos() {
+        val storage = FirebaseStorage.getInstance()
+        val storageRef = storage.reference.child("tech_hr/videos")
+
+        val urls = mutableListOf<String>()
+
+        try {
+            val result = storageRef.listAll().await()
+            val items: List<StorageReference> = result.items
+
+            for (item in items) {
+                val url = item.downloadUrl.await().toString()
+                urls.add(url)
+            }
+            _videoMutableState.value = urls
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     fun setFocusImageState(url : String?){

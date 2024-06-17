@@ -53,8 +53,8 @@ import com.example.tv3.viewModel.MainViewModel
 @ExperimentalTvMaterial3Api
 @Composable
 fun ImmersiveListScreen(
-    videos: List<VideoData>,
     images: List<String>,
+    videoUrls: List<String>,
     mainViewModel: MainViewModel
 ) {
 
@@ -86,7 +86,7 @@ fun ImmersiveListScreen(
 
         }
 
-        ScrollableItems(videos, images) {
+        ScrollableItems(images,videoUrls) {
             mainViewModel.setFocusImageState(it)
         }
     }
@@ -96,8 +96,8 @@ fun ImmersiveListScreen(
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun ScrollableItems(
-    list2: List<VideoData>,
     images: List<String> = emptyList(),
+    videoUrls:  List<String> = emptyList(),
     onFocus: (String?) -> Unit
 ) {
 
@@ -136,7 +136,16 @@ fun ScrollableItems(
                     bottom = 30.dp
                 )
             ) {
-                itemsIndexed(list2) { index, item ->
+
+                item {
+                    val slideShowButtonUrl = "https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/Firefly%20image%20slide%20slideshow%20play%20button%20with%20vibrat%20color%2046632.jpg?alt=media&token=efce5349-3af2-4330-b281-51dc8f6ce91b"
+                    BannerItem(-1, ItemType.VIDEO, null, slideShowButtonUrl, enabledClick = true) {
+                        onFocus(it)
+                    }
+                }
+
+
+                itemsIndexed(videoUrls) { index, item ->
                     BannerItem(index,ItemType.VIDEO, item, null, enabledClick = false) {
                         onFocus(it)
                     }
@@ -186,7 +195,7 @@ fun ScrollableItems(
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun BannerItem(
-    index: Int, itemType: ItemType, item: VideoData?,
+    index: Int, itemType: ItemType, item: String?,
     imageUrl: String?,
     enabledClick: Boolean = false,
     onFocus: (String?) -> Unit
@@ -204,7 +213,7 @@ fun BannerItem(
                 .wrapContentHeight()
                 .onFocusEvent {
                     if (it.isFocused) {
-                        onFocus(item?.imageUrl)
+                        onFocus("https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/image.png?alt=media&token=4e4dc296-fd0e-4023-b16f-c62a9ff2e4fd")
                     }
                 },
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -212,9 +221,13 @@ fun BannerItem(
         ) {
             Card(
                 onClick = {
-                    val intent = Intent(context, PlaybackActivity::class.java)
-                    intent.putExtra("videoUri", item?.videoUrl)
-                    ContextCompat.startActivity(context, intent, null)
+                    if(index != -1){
+                        val intent = Intent(context, PlaybackActivity::class.java)
+                        intent.putExtra("videoUri", item)
+                        ContextCompat.startActivity(context, intent, null)
+                    }else{
+                        null
+                    }
                 },
                 modifier = Modifier
                     .width(cardWidth)
@@ -235,14 +248,14 @@ fun BannerItem(
                 ),
             ) {
                 AsyncImage(
-                    model = item?.imageUrl,
-                    contentDescription = item?.title,
+                    model = "https://firebasestorage.googleapis.com/v0/b/chatapp-d37e0.appspot.com/o/image.png?alt=media&token=4e4dc296-fd0e-4023-b16f-c62a9ff2e4fd",
+                    contentDescription = "no title",
                     contentScale = ContentScale.FillBounds,
                     placeholder = painterResource(R.drawable.bg_banner),
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = item?.title.toString(), style = Typography.bodyLarge)
+            Text(text = if(index == -1) "No Video Present" else  "video $index".toString(), style = Typography.bodyLarge)
         }
     } else {
         Column(
@@ -284,7 +297,7 @@ fun BannerItem(
             ) {
                 AsyncImage(
                     model = imageUrl,
-                    contentDescription = item?.title,
+                    contentDescription = "",
                     contentScale = ContentScale.FillBounds,
                     placeholder = painterResource(R.drawable.bg_banner),
                 )
